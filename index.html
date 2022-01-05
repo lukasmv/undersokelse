@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spørreundersøkelse</title>
+</head>
+<script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script>
+<script>
+    let besvarelser = 0
+    let himmel = 0
+    let jord = 0
+    let venus = 0
+    let saturn = 0
+
+    window.onload = function(){
+        document.getElementById("svar").onclick=svar;
+        let jaHimmel = document.querySelector("#himmel1");
+        let jaJord = document.querySelector("#jorden1");
+        let jaVenus = document.querySelector("#venus1");
+        let jaSaturn = document.querySelector("#saturn1");
+        function svar() {
+            besvarelser = besvarelser + 1
+            if (jaHimmel.checked) {
+                himmel = himmel + 1
+            }
+            if (jaJord.checked) {
+                jord = jord + 1
+            }
+            if (jaVenus.checked) {
+                venus = venus + 1
+            }
+            if (jaSaturn.checked) {
+                saturn = saturn + 1
+            }
+            document.getElementById("antallSvart").innerHTML= "Antall svar på spørreundersøkelsen registrert er " + besvarelser + "."
+        }
+        document.getElementById("resultat").onclick=resultat;
+        function resultat() {
+            var chart = new ej.charts.Chart({
+                primaryXAxis: {
+                    valueType: "Category",
+                    title: "Påstand"
+                },
+                primaryYAxis: {
+                    title: "Antall som var enige",
+                    maximum: besvarelser
+                },
+                series: [
+                    {
+                        type: "Bar",
+                        dataSource: [
+                            { month: "Himmelen er grønn", prosent: himmel },
+                            { month: "Jorden er flat", prosent: jord },
+                            { month: "Venus er firkantet", prosent: venus },
+                            { month: "Saturn er rund", prosent: saturn }
+                        ],
+                        xName: "month",
+                        yName: "prosent"
+                    }
+                ]
+            });
+            chart.appendTo("#container");
+        }
+    };
+
+</script>
+
+<body>
+
+<h3>Himmelen er grønn</h3>
+<label>
+    <input type="radio" name="himmel" value="himmel1" id="himmel1" checked> Enig
+</label>
+<label>
+    <input type="radio" name="himmel" value="himmel2" id="himmel2"> Uenig
+</label>
+
+<h3>Jorden er flat</h3>
+<label>
+    <input type="radio" name="jorden" value="jorden1" id="jorden1" checked> Enig
+</label>
+<label>
+    <input type="radio" name="jorden" value="jorden2" id="jorden2"> Uenig
+</label>
+
+<h3>Venus er firkantet</h3>
+<label>
+    <input type="radio" name="venus" value="venus1" id="venus1" checked> Enig
+</label>
+<label>
+    <input type="radio" name="venus" value="venus2" id="venus2"> Uenig
+</label>
+
+<h3>Saturn er rund</h3>
+<label>
+    <input type="radio" name="saturn" value="saturn1" id="saturn1" checked> Enig
+</label>
+<label>
+    <input type="radio" name="saturn" value="saturn2" id="saturn2"> Uenig
+</label>
+
+<br><br><br>
+
+<button id="svar">Svar</button>
+
+<button id="resultat">Vis resultat</button>
+
+<p id="antallSvart">Antall svar på spørreundersøkelsen registrert er 0.</p>
+
+<div id="container"></div>
+
+</body>
+</html>
